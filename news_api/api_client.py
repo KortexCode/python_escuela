@@ -1,57 +1,12 @@
-# main.py - Todo el código en un archivo
 """
-Sistema de análisis de noticias con APIs múltiples.
+Docstring for sistema_de_noticias.news_api_client
 """
 
-# Se importan paquetes
 import json
 from urllib import error, parse, request
+from .exception_api import ApiKyeError
 
-# PEP 8: Configuración centralizada - constantes en MAYÚSCULAS con guiones bajos
-API_TIMEOUT: int = 30
-MAX_RETRIES: int = 3
-DEFAULT_LANGUAGE: str = "es"  # PEP 8: Comillas dobles para strings
-NEWS_API_KEY: str = "pub_d88ec99802d0447cbdbc94436af8bd8e"
 NEWS_API_URL_BASE: str = "https://newsdata.io/api/1/latest"
-
-
-class NewsAPIError(Exception):
-    """Excepción personalizada para errores de News API."""
-
-    pass
-
-
-class ApiKyeError(NewsAPIError):
-    """Excepción para errores de clave API."""
-
-    pass
-
-
-# PEP 8: Utilidades comunes del proyecto - funciones en snake_case
-def clean_text(text):
-    # PEP 8: 4 espacios por indentación, no tabs
-    """Limpia y normaliza texto."""  # PEP 8: Docstrings en comillas dobles triples
-    if not text:
-        return ""
-    return text.strip().lower()
-
-
-# PEP 8: Doble líneas en blanco entre funciones para separar lógicamente
-def validate_api_key(api_key):
-    """Valida que la API key tenga formato correcto."""
-    return len(api_key) > 10 and api_key.isalnum()
-
-
-# PEP 8: Funciones principales - agrupadas después de utilidades
-def fetch_news_from_api(api_name, query):
-    """Obtiene noticias de una API específica."""
-    pass
-
-
-def process_article_data(raw_data):
-    """Procesa datos crudos de artículo."""
-    pass
-
 
 def news_api_client(
     api_key: str, query: str, timeout: int = 30, retries: int = 3
@@ -108,18 +63,3 @@ def fetch_news(api_name: str, *args, **keywords):
 
     client = api_clients[api_name]
     return client(*args, **config)
-
-
-# PEP 8: Bloque principal
-try:
-    data_result: dict | None = None
-    data_result = fetch_news("newsAPI", NEWS_API_KEY, "video games")
-except ApiKyeError as e:
-    print(e)
-finally:
-    print("Request finalizado.")
-
-if data_result:
-    print("resultado", data_result)
-else:
-    print("No se obtuvieron datos.")
